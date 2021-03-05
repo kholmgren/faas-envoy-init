@@ -40,6 +40,15 @@ test {
     useJUnitPlatform()
 }
 
+jar {
+    manifest {
+        attributes(
+                'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
+                'Main-Class': 'io.kettil.faasenvoyinit.FaasEnvoyInitApplication'
+        )
+    }
+}
+
 tasks.register("buildDockerImage", Exec) {
     dependsOn shadowJar
     workingDir projectDir

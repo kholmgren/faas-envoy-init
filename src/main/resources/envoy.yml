@@ -71,7 +71,7 @@ static_resources:
                   address:
                     socket_address:
                       address: invoker
-                      port_value: 8080
+                      port_value: 80
 
     - name: acl_api
       connect_timeout: 0.25s
@@ -85,7 +85,7 @@ static_resources:
                   address:
                     socket_address:
                       address: invoker
-                      port_value: 8080
+                      port_value: 80
 
     - name: authz
       typed_extension_protocol_options:
