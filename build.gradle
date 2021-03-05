@@ -11,6 +11,11 @@ repositories {
     mavenLocal()
 }
 
+ext {
+    dockerPrefix = 'docker.io/kettil'
+    dockerImage = "${dockerPrefix}/${rootProject.name}"
+}
+
 dependencies {
     implementation 'io.kettil:faas-api:1.0'
 
@@ -33,4 +38,18 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+tasks.register("buildDockerImage", Exec) {
+    dependsOn shadowJar
+    workingDir projectDir
+    commandLine 'docker', 'build', '-t', dockerImage, '.'
+}
+
+tasks.register("pushDockerImage", Exec) {
+    dependsOn buildDockerImage
+    commandLine 'docker', 'push', dockerImage
+    doLast {
+        println "Pushed Docker image $dockerImage"
+    }
 }
